@@ -51,11 +51,9 @@ int stringToInt(string s){
     return value;
 }
 
-
 void characterCreationDiceRoll(){
     bool scoreToLowHigh = true;
     bool scoreToLowBonus = true;
-    ClearScreen();
     while(scoreToLowHigh || scoreToLowBonus){
         scoreToLowHigh = true;
         scoreToLowBonus = true;
@@ -66,6 +64,8 @@ void characterCreationDiceRoll(){
         int abilityBonusTotal=0;
         cout << "Rolling 6*4d6b3 after enter" << endl;
         cin.get();
+        cin.clear();
+        srand(time(0));
         for(int j=0; j<6; j++){
             int rollMinimum = 6;
             for (int i=0; i<4; i++){
@@ -86,7 +86,7 @@ void characterCreationDiceRoll(){
         if(abilityBonusTotal>0){
             scoreToLowBonus = false;
             if(scoreToLowHigh == false){
-                cout << "A good roll!" << endl;
+                cout << "A good roll!" << endl << endl;
             }else{
                 cout << "Your highest score was not high enough, rerolling." << endl << endl;
             }
@@ -167,7 +167,7 @@ void rollInterpretor(string choice){
     cout << endl << endl;
     cout << "Press enter to return to the main menu" << endl;
     cin.get();
-    cin.get();
+    cin.clear();
     ClearScreen();
 }
 
@@ -212,13 +212,20 @@ int main(){
             cout << "the \"+\" can be changed to \"-\"" << endl;
         }
         else if (choice == sChar){
+            ClearScreen();
             characterCreationDiceRoll();
         }
-        else if (choice != sExit){
+        else if (choice != sExit and choice.find('d') != string::npos){
+            ClearScreen();
             rollInterpretor(choice);
         }
+        else if (choice != sExit){
+            ClearScreen();
+            cout << "\"" << choice << "\" is unknown, please try again." << endl << endl;
+        }
     }while(choice != sExit);
-    cout << endl << "Press enter to exit"<<endl;
+    ClearScreen();
+    cout << "Press enter to exit"<<endl;
     cin.get();
     cin.get();
     return 0;
